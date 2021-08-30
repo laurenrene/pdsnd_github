@@ -33,10 +33,10 @@ restart_key = {'y':'yes',
 def get_filters():
 
     print('Hello! Let\'s explore some US bikeshare data!\n')
-    
+
     city_numbers = city_key.keys()
     city_input = 0
-        
+
     while city_input not in city_numbers:
         city_input = input('\nPlease choose one of the following cities by entering a number between 1-3\n (1) Chicago\n (2) New York City\n (3) Washington\n\nCity: ')
         if city_input in city_numbers:
@@ -44,10 +44,10 @@ def get_filters():
             break
         else:
             print(f'\nOops! {city_input} is not a number between 1 and 3. Please try again.')
-    
+
     month_numbers = month_key.keys()
     month_input = 0
-    
+
     while month_input not in month_numbers:
         month_input = input('\nPlease choose a month to filter by between 1-12 or "all"\n (1) January \n (2) February\n (3) March\n (4) April\n (5) May\n (6) June\n (7) July\n (8) August\n (9) September\n (10) October\n (11) November\n (12) December\n (all) No Filter\n\nMonth: ').lower()
         if month_input in month_numbers:
@@ -57,7 +57,7 @@ def get_filters():
             print(f'\nOops! {month_input} is not a number between 1 and 12 or "all". Please try again.')
     day_numbers = day_key.keys()
     day_input = 0
-    
+
     while day_input not in day_numbers:
         day_input = input('\nPlease choose a day of week to filter by between 1-7 or "all"\n (1) Sunday\n (2) Monday\n (3) Tuesday\n (4) Wednesday\n (5) Thursday\n (6) Friday\n (7) Saturday\n(all) No Filter\n\nDay of week: ').lower()
         if day_input in day_numbers:
@@ -65,13 +65,13 @@ def get_filters():
             break
         else:
             print(f'\nOops! {day_input} is not a number between 1 and 12 or "all". Please try again.')
-            
+
     city = city_key[city]
     month = month_key[month]
     day = day_key[day]
     restart_numbers = restart_key.keys()
     restart_input = 0
-     
+
     while restart_input not in restart_numbers:
         restart_input = input(f'\n Does this look correct? Enter Y or N.\n City: {city}\n Month: {month}\n Day: {day}\n').lower()
         if restart_input in restart_numbers:
@@ -88,8 +88,8 @@ def get_filters():
                     print('oops!')
         else:
             print('oops!')
-   
-    
+
+
     print('-'*40)
     return city, month, day
 
@@ -99,16 +99,16 @@ def load_data(city, month, day):
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = (df['Start Time'].dt.strftime("%B")).str.lower()
     df['day'] = (df['Start Time'].dt.weekday_name).str.lower()
-    
-        
+
+
     if month != 'all':
         df['month'] = df['month']
         df = df[df['month'] == month]
-        
+
     if day != 'all':
         df['day'] = df['day']
         df = df[df['day'] == day]
-        
+
     return df
 
 
@@ -120,7 +120,7 @@ def time_stats(df):
     # TO DO: display the most common month
     common_month = df['month'].mode()[0]
     print('The most common month is',common_month)
-    
+
     # TO DO: display the most common day of week
     common_day = df['day'].mode()[0]
     print('The most common day of week is',common_day)
@@ -141,13 +141,13 @@ def station_stats(df,city):
 
     # TO DO: display most commonly used start station
     common_start_station = df['Start Station'].mode()[0]
-    
+
     # TO DO: display most commonly used end station
     common_end_station = df['End Station'].mode()[0]
 
     # TO DO: display most frequent combination of start station and end station trip
     common_lane_station = (df['Start Station'] + ' to ' + df['End Station']).mode()[0]
-    
+
     print(f'The most popular stations in {city.title()}... \n Start Station: {common_start_station} \n End Station: {common_end_station} \n Start to End Station: {common_lane_station}')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -167,7 +167,7 @@ def trip_duration_stats(df,city):
     mean_travel = df['Trip Duration'].mean()
 
     print(f'{city.title()} travel time... \n Total: {total_travel} \n Mean: {mean_travel}')
-        
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -209,16 +209,17 @@ def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
-        
+
         time_stats(df)
         station_stats(df,city)
         trip_duration_stats(df,city)
         user_stats(df)
-        
+
         raw_data = input('\nWould you like to view five lines of raw data? Enter Y or N.\n')
         if raw_data.lower() == 'y':
             print(df.head())
-        
+
+        #ask user if they would like to restart
         restart = input('\nWould you like to restart? Enter Y or N.\n')
         if restart.lower() != 'y':
             break
