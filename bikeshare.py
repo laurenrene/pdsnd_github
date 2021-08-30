@@ -1,6 +1,8 @@
 import time
 import pandas as pd
 import numpy as np
+
+#keys for data
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -72,6 +74,7 @@ def get_filters():
     restart_numbers = restart_key.keys()
     restart_input = 0
 
+    #validate data within system and user
     while restart_input not in restart_numbers:
         restart_input = input(f'\n Does this look correct? Enter Y or N.\n City: {city}\n Month: {month}\n Day: {day}\n').lower()
         if restart_input in restart_numbers:
@@ -220,6 +223,7 @@ def main():
         if raw_data.lower() == 'y':
             print(df.head())
 
+        #ask user if they would like to restart
         restart = input('\nWould you like to restart? Enter Y or N.\n')
         if restart.lower() != 'y':
             break
