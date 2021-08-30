@@ -72,6 +72,7 @@ def get_filters():
     restart_numbers = restart_key.keys()
     restart_input = 0
 
+    #validate data within system and user
     while restart_input not in restart_numbers:
         restart_input = input(f'\n Does this look correct? Enter Y or N.\n City: {city}\n Month: {month}\n Day: {day}\n').lower()
         if restart_input in restart_numbers:
