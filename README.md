@@ -15,4 +15,4 @@ new_york_city.csv
 washington.csv
 
 ### Credits
-Udacity
+All learning credit goes to Udacity
